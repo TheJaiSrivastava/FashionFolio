@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Virtual Wardrobe Assistant{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <div class="auth-logo">
+        <i class="fas fa-tshirt"></i>
+    </div>
+    <h2 class="text-center mb-4">Create Account</h2>
+    
+    <form method="post" action="{{ url_for('auth.register') }}">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-floating mb-3">
+            {{ form.username(class="form-control", placeholder="Username", id="username") }}
+            {{ form.username.label }}
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.email(class="form-control", placeholder="Email", id="email") }}
+            {{ form.email.label }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.password(class="form-control", placeholder="Password", id="password") }}
+            {{ form.password.label }}
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.password2(class="form-control", placeholder="Confirm Password", id="password2") }}
+            {{ form.password2.label }}
+            {% if form.password2.errors %}
+                {% for error in form.password2.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-floating mb-3">
+            {{ form.location(class="form-control", placeholder="Location", id="location") }}
+            {{ form.location.label }}
+            <small class="text-muted">For weather-based suggestions (e.g., London, UK)</small>
+        </div>
+        
+        <div class="mb-3">
+            {{ form.style_preference.label(class="form-label") }}
+            {{ form.style_preference(class="form-select") }}
+            <small class="text-muted">Your preferred style for outfit suggestions</small>
+        </div>
+        
+        <div class="d-grid">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    
+    <div class="text-center mt-3">
+        <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a></p>
+    </div>
+</div>
+{% endblock %} 

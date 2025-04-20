@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Virtual Wardrobe Assistant{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="mb-4">Welcome, {{ current_user.username }}!</h1>
+    </div>
+    <div class="col-md-4">
+        {% if weather_data %}
+        <div class="weather-display d-flex align-items-center">
+            <div class="weather-icon">
+                {% if 'rain' in weather_data.condition|lower %}
+                <i class="fas fa-cloud-rain"></i>
+                {% elif 'cloud' in weather_data.condition|lower %}
+                <i class="fas fa-cloud"></i>
+                {% elif 'sun' in weather_data.condition|lower or 'clear' in weather_data.condition|lower %}
+                <i class="fas fa-sun"></i>
+                {% elif 'snow' in weather_data.condition|lower %}
+                <i class="fas fa-snowflake"></i>
+                {% else %}
+                <i class="fas fa-cloud-sun"></i>
+                {% endif %}
+            </div>
+            <div>
+                <div class="h4 mb-0">{{ weather_data.temperature }}°C</div>
+                <div>{{ weather_data.condition }}</div>
+                <small>{{ weather_data.location }}</small>
+            </div>
+        </div>
+        {% else %}
+        <div class="weather-display">
+            <p class="mb-0">Set your location in your profile to see weather data.</p>
+            <a href="{{ url_for('auth.profile') }}" class="btn btn-sm btn-primary mt-2">Update Profile</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <div class="stat-number">{{ total_items }}</div>
+            <div class="stat-label">Clothing Items</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="stat-number">{{ total_outfits }}</div>
+            <div class="stat-label">Outfits</div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Quick Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('wardrobe.add_item') }}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-1"></i> Add Clothing Item
+                    </a>
+                    <a href="{{ url_for('outfits.create') }}" class="btn btn-outfit">
+                        <i class="fas fa-plus-circle me-1"></i> Create Outfit
+                    </a>
+                    <a href="{{ url_for('outfits.suggest') }}" class="btn btn-success">
+                        <i class="fas fa-magic me-1"></i> Get Outfit Suggestions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if outfit_suggestions %}
+<div class="row mb-5">
+    <div class="col-12">
+        <h2>Today's Outfit Suggestions</h2>
+        <p class="text-muted mb-4">Based on the current weather and your preferences</p>
+        <div class="row">
+            {% for suggestion in outfit_suggestions %}
+            <div class="col-md-4 mb-4">
+                <div class="card suggestion-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ suggestion.outfit.name }}</h5>
+                        {% if not suggestion.is_generated %}
+                        <a href="#" class="favorite-toggle" data-outfit-id="{{ suggestion.outfit.id }}">
+                            <i class="fas fa-star favorite-star {% if suggestion.outfit.is_favorite %}active{% else %}inactive{% endif %}"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">{{ suggestion.reason }}</p>
+                        <div class="outfit-display">
+                            {% if suggestion.is_generated %}
+                                {% for outfit_item in suggestion.outfit.outfit_items %}
+                                <div class="outfit-item d-flex align-items-center">
+                                    <div class="me-3">
+                                        {% if outfit_item.clothing_item.image_filename %}
+                                        <img src="{{ url_for('static', filename='uploads/' + outfit_item.clothing_item.image_filename) }}" 
+                                             alt="{{ outfit_item.clothing_item.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                        {% else %}
+                                        <div class="img-thumbnail d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: #f8f9fa;">
+                                            <i class="fas fa-tshirt text-muted"></i>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <div>{{ outfit_item.clothing_item.name }}</div>
+                                        <small class="text-muted">{{ outfit_item.clothing_item.category.name }}</small>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                {% for outfit_item in suggestion.outfit.outfit_items.order_by('layer_order').all() %}
+                                <div class="outfit-item d-flex align-items-center">
+                                    <div class="me-3">
+                                        {% if outfit_item.clothing_item.image_filename %}
+                                        <img src="{{ url_for('static', filename='uploads/' + outfit_item.clothing_item.image_filename) }}" 
+                                             alt="{{ outfit_item.clothing_item.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                        {% else %}
+                                        <div class="img-thumbnail d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: #f8f9fa;">
+                                            <i class="fas fa-tshirt text-muted"></i>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <div>{{ outfit_item.clothing_item.name }}</div>
+                                        <small class="text-muted">{{ outfit_item.clothing_item.category.name }}</small>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        {% if suggestion.is_generated %}
+                        <a href="{{ url_for('outfits.create') }}" class="btn btn-sm btn-primary">Save This Outfit</a>
+                        {% else %}
+                        <a href="{{ url_for('outfits.detail', outfit_id=suggestion.outfit.id) }}" class="btn btn-sm btn-primary">View Details</a>
+                        <a href="{{ url_for('outfits.log_wear', outfit_id=suggestion.outfit.id) }}" class="btn btn-sm btn-success">Wear Today</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Items</h5>
+                <a href="{{ url_for('wardrobe.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% if recent_items %}
+                        {% for item in recent_items %}
+                        <a href="{{ url_for('wardrobe.item_detail', item_id=item.id) }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                            <div class="me-3">
+                                {% if item.image_filename %}
+                                <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}" 
+                                     alt="{{ item.name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                <div class="img-thumbnail d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: #f8f9fa;">
+                                    <i class="fas fa-tshirt text-muted"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div>{{ item.name }}</div>
+                                <small class="text-muted">{{ item.category.name }}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="list-group-item text-center py-5">
+                            <p class="mb-0">You haven't added any clothing items yet.</p>
+                            <a href="{{ url_for('wardrobe.add_item') }}" class="btn btn-primary btn-sm mt-2">Add First Item</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Outfits</h5>
+                <a href="{{ url_for('outfits.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% if recent_outfits %}
+                        {% for outfit in recent_outfits %}
+                        <a href="{{ url_for('outfits.detail', outfit_id=outfit.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div>{{ outfit.name }}</div>
+                                    <small class="text-muted">{{ outfit.occasion }}</small>
+                                </div>
+                                <div>
+                                    {% if outfit.is_favorite %}
+                                    <i class="fas fa-star favorite-star"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="list-group-item text-center py-5">
+                            <p class="mb-0">You haven't created any outfits yet.</p>
+                            <a href="{{ url_for('outfits.create') }}" class="btn btn-primary btn-sm mt-2">Create First Outfit</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

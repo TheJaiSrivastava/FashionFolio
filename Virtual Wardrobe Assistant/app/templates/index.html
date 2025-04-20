@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Virtual Wardrobe Assistant - Organize Your Clothing{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Virtual Wardrobe Assistant</h1>
+        <p class="lead">Catalog your clothing, get outfit suggestions, and maximize your wardrobe usage</p>
+        <div class="mt-4">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-2">Sign Up</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg">Log In</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-tshirt fa-3x text-primary mb-3"></i>
+                    <h3>Catalog Your Clothing</h3>
+                    <p>Keep track of all your clothing items with images, descriptions, and details.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-cloud-sun fa-3x text-primary mb-3"></i>
+                    <h3>Weather-Based Suggestions</h3>
+                    <p>Get outfit recommendations that match the current weather conditions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                    <h3>Track Wear Frequency</h3>
+                    <p>Monitor how often you wear each item to maximize your wardrobe usage.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/app-screenshot.jpg') }}" alt="App Screenshot" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6">
+            <h2>Never Wonder What to Wear Again</h2>
+            <p class="lead">Our intelligent algorithm suggests outfits based on the occasion, weather, and your style preferences.</p>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Create outfits for different occasions</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Get suggestions based on current weather</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Track when items were last worn</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Identify rarely used clothing</li>
+            </ul>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <h2>How It Works</h2>
+        <div class="row mt-4">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <h3 class="mb-0">1</h3>
+                        </div>
+                        <h4>Sign Up</h4>
+                        <p>Create an account to get started with your virtual wardrobe.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <h3 class="mb-0">2</h3>
+                        </div>
+                        <h4>Add Items</h4>
+                        <p>Upload photos and details about your clothing items.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <h3 class="mb-0">3</h3>
+                        </div>
+                        <h4>Create Outfits</h4>
+                        <p>Combine items into outfits or let our app suggest combinations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <h3 class="mb-0">4</h3>
+                        </div>
+                        <h4>Track Wear</h4>
+                        <p>Log when you wear items to track usage and get better suggestions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <h2>Ready to Maximize Your Wardrobe?</h2>
+        <p class="lead mb-4">Join thousands of users who are making the most of their clothing collections.</p>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">Sign Up Now</a>
+    </div>
+</div>
+{% endblock %} 

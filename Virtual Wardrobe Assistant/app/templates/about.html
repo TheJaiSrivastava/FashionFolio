@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Virtual Wardrobe Assistant{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h1 class="mb-4">About Virtual Wardrobe Assistant</h1>
+            
+            <p class="lead mb-4">
+                The Virtual Wardrobe Assistant is a modern solution for organizing your clothing collection, 
+                planning outfits, and maximizing your wardrobe usage.
+            </p>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Our Mission</h2>
+                    <p>
+                        Our mission is to help people make the most of their existing wardrobes, reduce unnecessary 
+                        purchases, and find joy in their personal style. By providing tools to catalog, organize, 
+                        and plan outfits, we aim to simplify daily clothing decisions while promoting sustainable fashion practices.
+                    </p>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">Key Features</h3>
+            
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="fas fa-tshirt text-primary me-2"></i>Clothing Catalog
+                            </h4>
+                            <p class="card-text">
+                                Digitize your entire wardrobe with detailed information about each item, including images, 
+                                categories, colors, and when you last wore them.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="fas fa-user-tie text-primary me-2"></i>Outfit Planning
+                            </h4>
+                            <p class="card-text">
+                                Create outfit combinations from your clothing items and organize them for different 
+                                occasions, seasons, or weather conditions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="fas fa-cloud-sun text-primary me-2"></i>Weather-Based Suggestions
+                            </h4>
+                            <p class="card-text">
+                                Get outfit recommendations based on the current weather conditions in your location, 
+                                ensuring you're always dressed appropriately.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="fas fa-chart-line text-primary me-2"></i>Usage Tracking
+                            </h4>
+                            <p class="card-text">
+                                Track how often you wear each item to identify favorites and rarely worn pieces, 
+                                helping you make better decisions about future purchases.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mb-3">How It Works</h3>
+            <p>
+                The Virtual Wardrobe Assistant uses advanced algorithms to suggest outfits based on several factors:
+            </p>
+            
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <i class="fas fa-temperature-high text-primary me-2"></i>
+                    <strong>Weather Conditions:</strong> Suggests appropriate clothing based on current temperature and precipitation.
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-calendar-alt text-primary me-2"></i>
+                    <strong>Occasion:</strong> Recommends outfits suitable for specific events or settings (casual, work, formal, etc.).
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-history text-primary me-2"></i>
+                    <strong>Wear History:</strong> Prioritizes items that haven't been worn recently to ensure rotation.
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-palette text-primary me-2"></i>
+                    <strong>Color Coordination:</strong> Ensures that suggested outfit combinations are aesthetically pleasing.
+                </li>
+            </ul>
+            
+            <h3 class="mb-3">Technology</h3>
+            <p>
+                Built with modern technologies to provide a seamless experience:
+            </p>
+            
+            <div class="row text-center mb-5">
+                <div class="col-4">
+                    <div class="py-3">
+                        <i class="fab fa-python fa-3x text-primary mb-2"></i>
+                        <div>Python</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="py-3">
+                        <i class="fas fa-flask fa-3x text-primary mb-2"></i>
+                        <div>Flask</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="py-3">
+                        <i class="fas fa-database fa-3x text-primary mb-2"></i>
+                        <div>SQL Database</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
